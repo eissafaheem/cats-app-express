@@ -4,8 +4,10 @@ const {
     addMessage,
     getAllMessage,
     deleteMessage
-} = require("./../controllers/messageController")
+} = require("./../controllers/messageController");
+const validateAccessToken = require("../middleware/validateTokenHandler");
 
+router.use(validateAccessToken)
 router.route("/").post(addMessage);
 router.route("/").get(getAllMessage);
 router.route("/:id").delete(deleteMessage);

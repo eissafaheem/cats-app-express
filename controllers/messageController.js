@@ -5,10 +5,9 @@ const addMessage = asyncHandler(async (req, res) => {
 
     const {
         content,
-        sender,
         conversationId
     } = req.body;
-    console.log(req.body);
+    const sender = req.user.email
     const message = await Message.create({
         content,
         sender,
@@ -22,7 +21,6 @@ const getAllMessage = asyncHandler(async (req, res) => {
     const {
         conversationId
     } = req.body;
-
     const messages = await Message.find({conversationId});
     console.log(messages)
     res.status(200).json(messages)

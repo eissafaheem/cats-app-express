@@ -8,7 +8,6 @@ const addConversation = asyncHandler(async (req, res) => {
         lastMessage,
         isPinned
     } = req.body;
-    console.log(req.body);
 
     const conversation = await Conversation.create({
         name,
@@ -22,16 +21,12 @@ const addConversation = asyncHandler(async (req, res) => {
 
 const getAllConversation = asyncHandler(async (req, res) => {
 
-    const {
-        userId
-    } = req.body;
-
+    const userId = req.user._id;
     const conversations = await Conversation.find({
         users: {
             $elemMatch: { $eq: userId }
         }
     });
-    console.log(conversations)
     res.status(200).json(conversations)
 });
 
