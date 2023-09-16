@@ -7,13 +7,13 @@ const errorHandler = require("./middleware/errorHandler");
 
 app.use(cors());
 app.use(express.json());
-app.use(errorHandler);
 connectDb();
 
 app.use('/api/user', require('./routes/userRoute'));
 app.use("/api/conversation", require("./routes/conversationRoute"))
 app.use("/api/message", require("./routes/messageRoute"))
 
+app.use(errorHandler);
 
 const server = app.listen(process.env.PORT || 5000, () => {
     console.log("Listening...");
