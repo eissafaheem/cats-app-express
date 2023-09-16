@@ -1,12 +1,34 @@
-const addMessage = (req,res)=>{
-    res.send("ko");
-}
+const Message = require("../models/messageModel");
+const asyncHandler = require("express-async-handler");
 
-const getAllMessage = (req,res)=>{
-    res.send("ko");
-}
+const addMessage = asyncHandler(async (req, res) => {
 
-const deleteMessage = (req,res)=>{
+    const {
+        content,
+        sender,
+        conversationId
+    } = req.body;
+    console.log(req.body);
+    const message = await Message.create({
+        content,
+        sender,
+        conversationId
+    })
+
+    res.status(200).json(message)
+});
+
+const getAllMessage = asyncHandler(async (req, res) => {
+    const {
+        conversationId
+    } = req.body;
+
+    const messages = await Message.find({conversationId});
+    console.log(messages)
+    res.status(200).json(messages)
+});
+
+const deleteMessage = (req, res) => {
     res.send("ko");
 }
 

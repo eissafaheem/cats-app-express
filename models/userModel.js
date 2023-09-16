@@ -26,7 +26,7 @@ const userSchema = mongoose.Schema({
         type: String
     },
     pawints:{
-        type: number
+        type: Number
     }
 })
 
