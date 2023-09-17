@@ -9,7 +9,7 @@ const validateAccessToken = require("../middleware/validateTokenHandler");
 
 router.use(validateAccessToken)
 router.route("/").post(addMessage);
-router.route("/").get(getAllMessage);
+router.route("/:conversationId").get(getAllMessage);
 router.route("/:id").delete(deleteMessage);
 
 module.exports = router;

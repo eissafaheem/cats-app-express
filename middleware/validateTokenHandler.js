@@ -8,15 +8,12 @@ const validateAccessToken = asyncHandler( (req,res,next) =>{
         res.status(403)
         throw new Error("Access token required");
     }
-    console.log(accessToken)
     if(accessToken.startsWith("Bearer")){
         accessToken = accessToken.split(" ")[1];
     }
-    console.log(accessToken)
 
     jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, decoded)=>{
         if(err){
-            console.log(err)
             res.status(401);
             throw new Error("Invalid access token")
         }

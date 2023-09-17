@@ -10,7 +10,8 @@ const messageSchema = mongoose.Schema(
             ]
         },
         sender: {
-            type: String,
+            type: mongoose.Schema.ObjectId,
+            ref: "User",
             required: [
                 true,
                 "Sender is required"
@@ -18,6 +19,7 @@ const messageSchema = mongoose.Schema(
         },
         conversationId: {
             type: mongoose.Schema.ObjectId,
+            ref: "Conversation",
             required: [
                 true,
                 "Conversation Id is required"
