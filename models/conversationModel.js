@@ -10,6 +10,7 @@ const conversationSchema = mongoose.Schema({
     },
     users:{
         type: [mongoose.Schema.ObjectId],
+        ref: "User",
         required: [
             true,
             "Users are required"

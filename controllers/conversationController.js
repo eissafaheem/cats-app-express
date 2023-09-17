@@ -21,12 +21,12 @@ const addConversation = asyncHandler(async (req, res) => {
 
 const getAllConversation = asyncHandler(async (req, res) => {
 
-    const userId = req.user._id;
+    const _id = req.user._id;
     const conversations = await Conversation.find({
         users: {
-            $elemMatch: { $eq: userId }
+            $elemMatch: { $eq: _id }
         }
-    });
+    }).populate("users", "name email avatarId pawints");
     res.status(200).json(conversations)
 });
 

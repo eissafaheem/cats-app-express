@@ -12,16 +12,16 @@ const createUser = asyncHandler(async (req, res) => {
         avatarId,
         pawints
     } = req.body;
-    
-    const userFromDb = await User.findOne({email});
-    if(userFromDb){
+
+    const userFromDb = await User.findOne({ email });
+    if (userFromDb) {
         res.status(400);
         throw new Error("User already exists!")
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    const user =  await User.create({
+    const user = await User.create({
         name,
         email,
         password: hashedPassword,
@@ -41,34 +41,55 @@ const signin = asyncHandler(async (req, res) => {
         email,
         password
     } = req.body;
-
-    const userFromDb = await User.findOne({email});
-    if(!userFromDb){
+    const userFromDb = await User.findOne({ email });
+    if (!userFromDb) {
         res.status(404);
         throw new Error("User does not exist");
     }
 
-    if(await bcrypt.compare(password, userFromDb.password)){
+    if (await bcrypt.compare(password, userFromDb.password)) {
         const accessToken = jwt.sign(
             {
                 user: {
                     _id: userFromDb._id,
                     email: userFromDb.email,
-                    name: userFromDb.name 
+                    name: userFromDb.name
                 }
             },
             process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn: "2 days"}
+            { expiresIn: "2 days" }
         )
-    
-        res.status(200).json({accessToken});
+
+        res.status(200).json(
+            {
+                accessToken,
+                user: {
+                    _id: userFromDb._id,
+                    name: userFromDb.name,
+                    email: userFromDb.email
+                }
+            }
+        );
     }
-    else{
+    else {
         res.status(401);
         throw new Error("invalid email or password!");
     }
 
 });
+
+const searchUser = async (req, res) => {
+    const token = req.params.token;
+    const regex = RegExp(token, 'i');
+    const users = await User.find({
+        $or: [
+            { email: { $regex: regex } },
+            { name: { $regex: regex } }
+        ]
+    }).select('-password');
+
+    res.status(200).json(users);
+}
 
 const deleteUser = (req, res) => {
     res.send("User deleted")
@@ -81,6 +102,7 @@ const currentUser = (req, res) => {
 module.exports = {
     createUser,
     signin,
+    searchUser,
     deleteUser,
     currentUser
 };

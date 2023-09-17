@@ -8,6 +8,7 @@ const validateAccessToken = asyncHandler( (req,res,next) =>{
         res.status(403)
         throw new Error("Access token required");
     }
+    console.log(accessToken)
     if(accessToken.startsWith("Bearer")){
         accessToken = accessToken.split(" ")[1];
     }
