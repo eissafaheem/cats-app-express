@@ -6,10 +6,10 @@ const addMessage = asyncHandler(async (req, res) => {
         content,
         conversationId
     } = req.body;
-    const sender = req.user._id;
+    const senderId = req.user._id;
     const message = await Message.create({
         content,
-        sender,
+        senderId,
         conversationId
     });
     res.status(200).json(message)
@@ -19,9 +19,7 @@ const getAllMessage = asyncHandler(async (req, res) => {
     const {
         conversationId
     } = req.params;
-    console.log(req.params)
     const messages = await Message.find({conversationId});
-    console.log(messages)
     res.status(200).json(messages)
 });
 

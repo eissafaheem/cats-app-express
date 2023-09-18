@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config();
 const cors = require("cors");
 const connectDb = require("./config/dbConnection");
 const errorHandler = require("./middleware/errorHandler");
+const initSocketIo = require("./socket/socketIo");
 
 app.use(cors());
 app.use(express.json());
@@ -19,13 +20,5 @@ const server = app.listen(process.env.PORT || 5000, () => {
     console.log("Listening...");
 })
 
-const io = require("socket.io")(server, {
-    cors: {
-        origin: "*"
-    }
-})
-
-io.on("connection", (socket) => {
-    console.log("Connected");
-})
+initSocketIo(server);
 
