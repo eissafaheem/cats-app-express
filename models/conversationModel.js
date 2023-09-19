@@ -2,11 +2,7 @@ const mongoose = require("mongoose");
 
 const conversationSchema = mongoose.Schema({
     name: {
-        type: String,
-        required: [
-            true,
-            "Name is required"
-        ]
+        type: String
     },
     users:{
         type: [mongoose.Schema.ObjectId],

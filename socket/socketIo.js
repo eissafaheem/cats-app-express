@@ -22,10 +22,9 @@ function initSocketIo(server) {
             const usersArray = data.conversation.users;
             for (let i = 0; i < usersArray.length; i++) {
                 console.log("message sent to", usersArray[i].name)
-                socket.in(usersArray[i]._id).emit(SocketIoEvents.RECIEVE_MESSAGE, data.message);
+                socket.in(usersArray[i]._id).emit(SocketIoEvents.RECIEVE_MESSAGE, data);
             }
         })
-
 
         socket.on("disconnect", () => {
             console.log("disconnect")
