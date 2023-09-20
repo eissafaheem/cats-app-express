@@ -7,8 +7,9 @@ const {
     pinConversation,
     searchConversation
 } = require("./../controllers/conversationController");
+const validateAccessToken = require("../middleware/validateTokenHandler");
 
-
+router.use(validateAccessToken);
 router.route("/").post(addConversation).get(getAllConversation);
 router.route("/:id").delete(deleteConversation);
 router.route("/pin", ).put(pinConversation);
