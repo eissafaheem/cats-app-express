@@ -15,7 +15,7 @@ const createUser = asyncHandler(async (req, res) => {
 
     const userFromDb = await User.findOne({ email });
     if (userFromDb) {
-        res.status(400);
+        res.status(404);
         throw new Error("User already exists!")
     }
 
