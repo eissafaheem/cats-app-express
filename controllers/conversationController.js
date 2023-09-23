@@ -27,7 +27,7 @@ const getAllConversation = asyncHandler(async (req, res) => {
 const updateConversation = asyncHandler(async (req, res) => {
     const conversationId = req.params.id;
     const { name, users, lastMessage, isPinned } = req.body;
-
+    console.log(req.body);
     const conversation = await Conversation.findById(conversationId);
     if (!conversation) {
       res.status(404);
