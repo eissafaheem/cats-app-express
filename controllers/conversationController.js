@@ -9,9 +9,11 @@ const addConversation = asyncHandler(async (req, res) => {
     users,
     lastMessage,
     isPinned,
-  });
+  })
 
-  res.status(200).json(conversation);
+  const newConversation = await Conversation.findById(conversation._id).populate("users");
+
+  res.status(200).json(newConversation);
 });
 
 const getAllConversation = asyncHandler(async (req, res) => {
@@ -21,6 +23,7 @@ const getAllConversation = asyncHandler(async (req, res) => {
       $elemMatch: { $eq: _id },
     },
   }).populate("users", "name email avatarId pawints");
+  console.log(conversations)
   res.status(200).json(conversations);
 });
 
@@ -37,7 +40,7 @@ const updateConversation = asyncHandler(async (req, res) => {
     if (name) {
       conversation.name = name;
     }
-    if (users) {
+    if (users.length) {
       conversation.users = users;
     }
     if (lastMessage) {
