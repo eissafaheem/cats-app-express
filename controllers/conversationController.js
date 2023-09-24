@@ -4,7 +4,6 @@ const asyncHandler = require("express-async-handler");
 const addConversation = asyncHandler(async (req, res) => {
   const { name, users, lastMessage, isPinned } = req.body;
 
-  console.log(users);
   const conversation = await Conversation.create({
     name,
     users,
@@ -26,15 +25,13 @@ const getAllConversation = asyncHandler(async (req, res) => {
     },
   })
     .populate("users", "name email avatarId pawints")
-    .sort({ createdAt: -1 });
-  console.log(conversations);
+    .sort({ updatedAt: -1 });
   res.status(200).json(conversations);
 });
 
 const updateConversation = asyncHandler(async (req, res) => {
   const conversationId = req.params.id;
   const { name, users, lastMessage, isPinned } = req.body;
-  console.log(req.body);
   const conversation = await Conversation.findById(conversationId);
   if (!conversation) {
     res.status(404);

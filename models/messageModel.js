@@ -9,7 +9,7 @@ const messageSchema = mongoose.Schema(
                 "Content is required"
             ]
         },
-        senderId: {
+        sender: {
             type: mongoose.Schema.ObjectId,
             ref: "User",
             required: [

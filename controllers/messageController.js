@@ -6,23 +6,31 @@ const addMessage = asyncHandler(async (req, res) => {
         content,
         conversationId
     } = req.body;
-    const senderId = req.user._id;
+    const sender = req.user._id;
     const message = await Message.create({
         content,
-        senderId,
+        sender,
         conversationId
     });
 
-    // const newMessage = await Message.findById(message._id).populate("sender");
+    const newMessage = await Message.findById(message._id).populate("sender");
 
-    res.status(200).json(message)
+    res.status(200).json(newMessage)
 });
 
 const getAllMessage = asyncHandler(async (req, res) => {
     const {
         conversationId
     } = req.params;
-    const messages = await Message.find({conversationId});
+    const messages = await Message.find({conversationId}).populate("sender");
+    res.status(200).json(messages)
+});
+
+const getMessageById = asyncHandler(async (req, res) => {
+    const {
+        messageId
+    } = req.params;
+    const messages = await Message.findById(messageId).populate("sender");
     res.status(200).json(messages)
 });
 
