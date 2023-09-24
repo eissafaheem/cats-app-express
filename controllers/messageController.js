@@ -12,6 +12,9 @@ const addMessage = asyncHandler(async (req, res) => {
         senderId,
         conversationId
     });
+
+    // const newMessage = await Message.findById(message._id).populate("sender");
+
     res.status(200).json(message)
 });
 
