@@ -33,6 +33,8 @@ const createUser = asyncHandler(async (req, res) => {
         _id: user._id,
         name,
         email,
+        avatarId,
+        pawints
     });
 });
 
@@ -66,7 +68,9 @@ const signin = asyncHandler(async (req, res) => {
                 user: {
                     _id: userFromDb._id,
                     name: userFromDb.name,
-                    email: userFromDb.email
+                    email: userFromDb.email,
+                    avatarId: userFromDb.avatarId,
+                    pawints: userFromDb.pawints
                 }
             }
         );
