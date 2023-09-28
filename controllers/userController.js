@@ -15,7 +15,7 @@ const createUser = asyncHandler(async (req, res) => {
 
     const userFromDb = await User.findOne({ email });
     if (userFromDb) {
-        res.status(400);
+        res.status(404);
         throw new Error("User already exists!")
     }
 
@@ -30,9 +30,11 @@ const createUser = asyncHandler(async (req, res) => {
     })
 
     res.status(200).json({
-        id: user._id,
+        _id: user._id,
         name,
         email,
+        avatarId,
+        pawints
     });
 });
 
@@ -66,7 +68,9 @@ const signin = asyncHandler(async (req, res) => {
                 user: {
                     _id: userFromDb._id,
                     name: userFromDb.name,
-                    email: userFromDb.email
+                    email: userFromDb.email,
+                    avatarId: userFromDb.avatarId,
+                    pawints: userFromDb.pawints
                 }
             }
         );

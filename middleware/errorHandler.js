@@ -7,7 +7,7 @@ const errorHandler = (err, req, res, next) => {
         case STATUS_CODES.FORBIDDEN:
             res.json({
                 title: "Forbidden",
-                message: err.message,
+                errorMessage: err.message,
                 stackTrace: err.stack
             });
             break;
@@ -15,7 +15,7 @@ const errorHandler = (err, req, res, next) => {
         case STATUS_CODES.NOT_FOUND:
             res.json({
                 title: "Not Found",
-                message: err.message,
+                errorMessage: err.message,
                 stackTrace: err.stack
             });
             break;
@@ -23,7 +23,7 @@ const errorHandler = (err, req, res, next) => {
         case STATUS_CODES.SERVER_ERROR:
             res.json({
                 title: "Server Error",
-                message: err.message,
+                errorMessage: err.message,
                 stackTrace: err.stack
             });
             break;
@@ -31,7 +31,7 @@ const errorHandler = (err, req, res, next) => {
         case STATUS_CODES.UNAUTHORIZED:
             res.json({
                 title: "Unauthorized",
-                message: err.message,
+                errorMessage: err.message,
                 stackTrace: err.stack
             });
             break;
@@ -39,7 +39,7 @@ const errorHandler = (err, req, res, next) => {
         case STATUS_CODES.VALIDATION_ERROR:
             res.json({
                 title: "Validation Error",
-                message: err.message,
+                errorMessage: err.message,
                 stackTrace: err.stack
             });
             break;
@@ -47,7 +47,7 @@ const errorHandler = (err, req, res, next) => {
         default:
             res.json({
                 title: "Error",
-                message: err.message,
+                errorMessage: err.message,
                 stackTrace: err.stack
             });
             break;
