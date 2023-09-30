@@ -49,19 +49,19 @@ const updateUser = asyncHandler(async (req, res) => {
 
     const _id = req.params.id;
     console.log(req.params.id);
-    const userFromDb = await User.findById(_id);
+    const userFromDb = await User.findOne({_id});
     if (!userFromDb) {
         res.status(404);
         throw new Error("User does not exists!")
     }
 
-    if(name){
+    if(name?.length){
         userFromDb.name = name;
     }
-    if(email){
+    if(email?.length){
         userFromDb.email = email;
     }
-    if(password){
+    if(password?.length){
         userFromDb.password = password;
     }
     if(avatarId){
@@ -70,16 +70,10 @@ const updateUser = asyncHandler(async (req, res) => {
     if(pawints){
         userFromDb.pawints = pawints;
     }
-
+    console.log(req.body)
     await userFromDb.save();
 
-    res.status(200).json({
-        _id: userFromDb._id,
-        name,
-        email,
-        avatarId,
-        pawints
-    });
+    res.status(200).json(userFromDb);
 });
 
 const signin = asyncHandler(async (req, res) => {
