@@ -38,6 +38,44 @@ const createUser = asyncHandler(async (req, res) => {
     });
 });
 
+const updateUser = asyncHandler(async (req, res) => {
+    const {
+        name,
+        email,
+        password,
+        avatarId,
+        pawints
+    } = req.body;
+
+    const _id = req.params.id;
+    console.log(req.params.id);
+    const userFromDb = await User.findOne({_id});
+    if (!userFromDb) {
+        res.status(404);
+        throw new Error("User does not exists!")
+    }
+
+    if(name?.length){
+        userFromDb.name = name;
+    }
+    if(email?.length){
+        userFromDb.email = email;
+    }
+    if(password?.length){
+        userFromDb.password = password;
+    }
+    if(avatarId){
+        userFromDb.avatarId = avatarId;
+    }
+    if(pawints){
+        userFromDb.pawints = pawints;
+    }
+    console.log(req.body)
+    await userFromDb.save();
+
+    res.status(200).json(userFromDb);
+});
+
 const signin = asyncHandler(async (req, res) => {
     const {
         email,
@@ -108,5 +146,6 @@ module.exports = {
     signin,
     searchUser,
     deleteUser,
-    currentUser
+    currentUser,
+    updateUser
 };
